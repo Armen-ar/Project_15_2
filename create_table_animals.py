@@ -7,7 +7,7 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE age_upon_outcome (
         id INTEGER PRIMARY KEY autoincrement,
         age_id INTEGER,
-        FOREIGN KEY (age_id) REFERENCES animals(age_upon_outcome)
+        FOREIGN KEY(age_id) REFERENCES animals(age_upon_outcome)
     )
     """
 
@@ -15,7 +15,7 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE animal_type (
         id INTEGER PRIMARY KEY autoincrement,
         type_id INTEGER,
-        FOREIGN KEY (type_id) REFERENCES animals(animal_type)
+        FOREIGN KEY(type_id) REFERENCES animals(animal_type)
     )
     """
 
@@ -23,7 +23,7 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE breed (
         id INTEGER PRIMARY KEY autoincrement,
         breed_id INTEGER,
-        FOREIGN KEY (breed_id) REFERENCES animals(breed)
+        FOREIGN KEY(breed_id) REFERENCES animals(breed)
     )
     """
 
@@ -31,7 +31,7 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE color (
         id INTEGER PRIMARY KEY autoincrement,
         color_id INTEGER,
-        FOREIGN KEY (color_id) REFERENCES animals(color)
+        FOREIGN KEY(color_id) REFERENCES animals(color)
     )
     """
 
@@ -39,9 +39,9 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE color_color (
         color_1_id INTEGER,
         color_2_id INTEGER,
-        PRIMARY KEY (color_1_id, color_2_id),
-        FOREIGN KEY (color_1_id) REFERENCES animals(color1_id),
-        FOREIGN KEY (color_2_id) REFERENCES animals(color2_id)
+        PRIMARY KEY(color_1_id, color_2_id),
+        FOREIGN KEY(color_1_id) REFERENCES animals(color1_id),
+        FOREIGN KEY(color_2_id) REFERENCES animals(color2_id)
     )
     """
 
@@ -49,7 +49,7 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE outcome_subtype (
         id INTEGER PRIMARY KEY autoincrement,
         subtype_id INTEGER,
-        FOREIGN KEY (subtype_id) REFERENCES animals(outcome_subtype)
+        FOREIGN KEY(subtype_id) REFERENCES animals(outcome_subtype)
     )
     """
 
@@ -57,7 +57,7 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE outcome_type (
         id INTEGER PRIMARY KEY autoincrement,
         type_id INTEGER,
-        FOREIGN KEY (type_id) REFERENCES animals(outcome_type)
+        FOREIGN KEY(type_id) REFERENCES animals(outcome_type)
     )
     """
 
@@ -65,7 +65,7 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE outcome_month (
         id INTEGER PRIMARY KEY autoincrement,
         month_id INTEGER,
-        FOREIGN KEY (month_id) REFERENCES animals(outcome_month)
+        FOREIGN KEY(month_id) REFERENCES animals(outcome_month)
     )
     """
 
@@ -73,34 +73,37 @@ with sqlite3.connect("animal.db") as connection:
         CREATE TABLE outcome_year (
         id INTEGER PRIMARY KEY autoincrement,
         year_id INTEGER,
-        FOREIGN KEY (year_id) REFERENCES animals(outcome_year)
+        FOREIGN KEY(year_id) REFERENCES animals(outcome_year)
     )
     """
 
     query_10 = """
-            CREATE TABLE cats (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                age_upon_outcome_id INTEGER,
-                FOREIGN KEY (age_upon_outcome_id) REFERENCES age_upon_outcome(id),
-                animal_id VARCHAR(100), FOREIGN KEY REFERENCES animals(animal_id),
-                animal_type_id INTEGER,
-                FOREIGN KEY (animal_type_id) REFERENCES animal_type(id),
-                nickname_id VARCHAR(100), FOREIGN KEY REFERENCES animals(name),
-                breed_id INTEGER,
-                FOREIGN KEY (breed_id) REFERENCES breed(id),
-                color_id INTEGER,
-                FOREIGN KEY (color_id) REFERENCES color(id),
-                date_of_birth_id VARCHAR(100), FOREIGN KEY REFERENCES color(date_of_birth),
-                outcome_subtype_id INTEGER,
-                FOREIGN KEY (outcome_subtype_id) REFERENCES outcome_subtype(id),
-                outcome_type_id INTEGER,
-                FOREIGN KEY (outcome_type_id) REFERENCES outcome_type(id),
-                outcome_month_id INTEGER,
-                FOREIGN KEY (outcome_month_id) REFERENCES outcome_type(id),
-                outcome_year_id INTEGER,
-                FOREIGN KEY (outcome_year_id) REFERENCES outcome_type(id)
-                )
-            """
+                CREATE TABLE cats (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        age_upon_outcome_id INTEGER,
+        animal_id VARCHAR(100),
+        animal_type_id INTEGER,
+        nickname_id VARCHAR(100),
+        breed_id INTEGER,
+        color_id INTEGER,
+        date_of_birth_id VARCHAR(100),
+        outcome_subtype_id INTEGER,
+        outcome_type_id INTEGER,
+        outcome_month_id INTEGER,
+        outcome_year_id INTEGER,       
+        FOREIGN KEY(animal_id) REFERENCES animals(animal_id),
+        FOREIGN KEY(nickname_id) REFERENCES animals(name),
+        FOREIGN KEY(date_of_birth_id) REFERENCES animals(date_of_birth),
+        FOREIGN KEY(age_upon_outcome_id) REFERENCES age_upon_outcome(id) ON DELETE SET DEFAULT ON UPDATE CASCADE,
+        FOREIGN KEY(animal_type_id) REFERENCES animal_type(id) ON DELETE SET DEFAULT ON UPDATE CASCADE,       
+        FOREIGN KEY(breed_id) REFERENCES breed(id) ON DELETE SET DEFAULT ON UPDATE CASCADE,
+        FOREIGN KEY(color_id) REFERENCES color(id) ON DELETE SET DEFAULT ON UPDATE CASCADE,        
+        FOREIGN KEY(outcome_subtype_id) REFERENCES outcome_subtype(id) ON DELETE SET DEFAULT ON UPDATE CASCADE,
+        FOREIGN KEY(outcome_type_id) REFERENCES outcome_type(id) ON DELETE SET DEFAULT ON UPDATE CASCADE,
+        FOREIGN KEY(outcome_month_id) REFERENCES outcome_type(id) ON DELETE SET DEFAULT ON UPDATE CASCADE,
+        FOREIGN KEY(outcome_year_id) REFERENCES outcome_type(id) ON DELETE SET DEFAULT ON UPDATE CASCADE
+        )
+        """
 
     index_query = """
         CREATE INDEX animals_idx ON cats (animal_id)
