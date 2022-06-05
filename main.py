@@ -7,7 +7,7 @@ with sqlite3.connect("animal.db") as connection:
         SELECT animal_id.animal_id,
        age_upon_outcome.age_id,
        animal_type.type_id,
-       name.name_id,
+       `name`.name_id,
        breed.breed_id,
        color1.color1_id,
        color2.color2_id,
@@ -36,4 +36,8 @@ with sqlite3.connect("animal.db") as connection:
     cursor.execute(query)
 
     for row in cursor.fetchall():
-        print(row)
+        print(f"Идентификационный номер - {row[0]}\nВозраста животного на момент прибытия - {row[1]}\n"
+              f"Тип - {row[2]}\nКличка - {row[3]}\nПорода - {row[4]}\n"
+              f"Цвет - {row[5]}\nСочетания цвета - {row[6]}\nДаты рождения - {row[7]}\n"
+              f"Программ для бездомных животных - {row[8]}\nСостоянии животного - {row[9]}\n"
+              f"Месяц прибытия - {row[10]}\nГод прибытия - {row[11]}\n")
